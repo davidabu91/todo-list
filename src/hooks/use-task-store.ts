@@ -1,13 +1,17 @@
-import useLocalStorege from './use-local-storege';
 import {Task} from '../types';
 import {nanoid} from 'nanoid';
 import {shuffle} from 'lodash';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import TaskContext from '../contexts/task-store';
 
 const useTaskStore = () => {
     const [tasks, setTasks] = useContext(TaskContext);
-    const [focusedTaskId, setFocusedTaskId] = useState<string | undefined>(undefined);
+
+    const getIncompleteTask = () => tasks.filter(task => !task.isComplete)[0]?.id
+
+    const [focusedTaskId, setFocusedTaskId] = useState<string | undefined>(
+        tasks.filter(task => !task.isComplete)[0]?.id
+    );
   
   
     const addTask = (task: Pick<Task, "label">) => {
@@ -26,6 +30,11 @@ const useTaskStore = () => {
     }
   
     const focusedTask = tasks.find((task) => task.id === focusedTaskId);
+
+    useEffect(() => {
+        if(focusedTask?.isComplete)
+        setFocusedTaskId(tasks.filter(task => !task.isComplete)[0]?.id);
+    },[tasks, focusedTask]);
   
     const shuffleFocusTask = () => {
       setFocusedTaskId(
