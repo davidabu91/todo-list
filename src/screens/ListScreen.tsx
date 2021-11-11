@@ -1,12 +1,11 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
-import { nanoid } from 'nanoid';
 import { Task, TasksProps } from '../types';
 
 type Props = TasksProps & {};
 
 
 
-const ListScreen: React.FC<Props> = ({tasks, setTasks, updateTaskCompletion}) => {
+const ListScreen: React.FC<Props> = ({addTask, tasks, setTasks, updateTaskCompletion}) => {
 
     const [newTaskLabel, setNewTaskLabel] = useState('');
 
@@ -14,7 +13,7 @@ const ListScreen: React.FC<Props> = ({tasks, setTasks, updateTaskCompletion}) =>
 
     function handleNewTaskKeyPress(e: KeyboardEvent<HTMLInputElement>) {
         if (e.key === "Enter" && newTaskLabel !== '') {
-            setTasks(tasks => [...tasks, { id: nanoid(), label: newTaskLabel, isComplete: false }]);
+         addTask( { label: newTaskLabel });
             setNewTaskLabel('');
         }
     };

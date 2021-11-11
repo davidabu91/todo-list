@@ -1,3 +1,5 @@
+import { shuffle } from 'lodash';
+import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
 import FocusScreen from './screens/FocusScreen';
@@ -8,6 +10,15 @@ import { Task } from './types';
 function App() {
 
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [focusedTaskId, setFocusedTaskId] = useState<string | undefined>(undefined);
+
+
+  const addTask = (task: Pick<Task, "label">) => {
+    const id = nanoid()
+    setTasks(tasks => [...tasks, { id:id, label: task.label, isComplete: false }]);
+      if(!focusedTaskId) setFocusedTaskId(id)
+
+  }
 
   const updateTaskCompletion = (taskId: string, isComplete: boolean ) => {
     setTasks(tasks => tasks.map(task => {
@@ -17,7 +28,15 @@ function App() {
     );
   }
 
-  const tasksApi = { tasks, setTasks, updateTaskCompletion };
+  const focusedTask = tasks.find((task) => task.id === focusedTaskId);
+
+  const shuffleFocusTask = () => {
+    setFocusedTaskId(
+      shuffle(tasks.filter(task => !task.isComplete))[0]?.id 
+      );
+  };
+
+  const tasksApi = {addTask, focusedTask, tasks, setTasks, shuffleFocusTask, updateTaskCompletion };
 
   return (
     <BrowserRouter>
