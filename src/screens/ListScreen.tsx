@@ -1,17 +1,13 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { nanoid } from 'nanoid';
+import { Task, TasksProps } from '../types';
 
-type Props = {};
+type Props = TasksProps & {};
 
-type Task = {
-    id: string;
-    label: string;
-    isComplete: boolean;
-}
 
-const ListScreen: React.FC<Props> = () => {
 
-    const [tasks, setTasks] = useState<Task[]>([]);
+const ListScreen: React.FC<Props> = ({tasks, setTasks}) => {
+
     const [newTaskLabel, setNewTaskLabel] = useState('');
 
     const handleNewTaskLabelChange = (e: ChangeEvent<HTMLInputElement>) => setNewTaskLabel(e.target.value);
