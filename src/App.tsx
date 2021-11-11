@@ -1,7 +1,8 @@
 import { shuffle } from 'lodash';
 import { nanoid } from 'nanoid';
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
+import useLocalStorege from './hooks/use-local-storege';
 import FocusScreen from './screens/FocusScreen';
 import ListScreen from './screens/ListScreen';
 import { Task } from './types';
@@ -9,8 +10,8 @@ import { Task } from './types';
 
 function App() {
 
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [focusedTaskId, setFocusedTaskId] = useState<string | undefined>(undefined);
+  const [tasks, setTasks] = useLocalStorege<Task[]>('tasks',[]);
+  const [focusedTaskId, setFocusedTaskId] = useLocalStorege<string | undefined>('focused',undefined);
 
 
   const addTask = (task: Pick<Task, "label">) => {
