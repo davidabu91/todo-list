@@ -6,6 +6,7 @@ import TextButton from '../components/TextButton';
 import useTaskStore from '../hooks/use-task-store';
 import { Task } from '../types';
 import IconButton from '../components/IconButton';
+import Checkbox from '../components/CheckBox';
 
 const Input = styled.input`
     background: #001;
@@ -47,6 +48,11 @@ const DeleteIcon = styled(RiDeleteBinLine)`
     }
 `
 
+// const Checkbox = styled.input`
+    
+
+// ` 
+
 type Props = {};
 
 const ListScreen: React.FC<Props> = () => {
@@ -78,7 +84,7 @@ const ListScreen: React.FC<Props> = () => {
     return <Container>
 
 
-        {tasks.map(task => <Item key={task.id}><input type="checkbox" checked={task.isComplete} onChange={(handleTaskCompleteChange(task))} />
+        {tasks.map(task => <Item key={task.id}><Checkbox  checked={task.isComplete} onChange={(handleTaskCompleteChange(task))} />
             <Spacer width={24} />
             {task.label}
             <Spacer flex={1} />
