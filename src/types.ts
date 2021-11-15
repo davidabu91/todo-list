@@ -4,6 +4,7 @@ export type Task = {
     isComplete: boolean;
 }
 
+
 export type TasksProps = {
     addTask: (task: Pick<Task, "label">) => void;
     focusedTask?: Task;
