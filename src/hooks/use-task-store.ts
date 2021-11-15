@@ -7,7 +7,6 @@ import TaskContext from '../contexts/task-store';
 const useTaskStore = () => {
     const [tasks, setTasks] = useContext(TaskContext);
 
-    const getIncompleteTask = () => tasks.filter(task => !task.isComplete)[0]?.id
 
     const [focusedTaskId, setFocusedTaskId] = useState<string | undefined>(
         tasks.filter(task => !task.isComplete)[0]?.id
